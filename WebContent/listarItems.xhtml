@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Controle de estoque</title>
+</h:head>
+<h:body>
+	<p:panel header="Listar Itens">
+		<h:form>
+			<p:commandLink value="Home" action="index" />
+			<br /><br />
+			<p:commandButton value="Novo" action="#{itemBean.prepararCadastro}" ajax="false" />
+		</h:form>
+		<br />
+
+		<h:form prependId="false">
+		
+			<p:inputText value="#{itemBean.filtro}">
+				<p:ajax event="blur" listener="#{itemBean.filtrarTabela}" update="tableItems" />
+			</p:inputText>
+			<p:commandButton value="Pesquisar" action="#{itemBean.filtrarTabela}" />
+			
+			<p:dataTable id="tableItems" widgetVar="table" value="#{itemBean.listItem}" var="item">
+				<f:facet name="header">
+					<h:outputText value="Itens" />
+				</f:facet>
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+
+				<p:column headerText="Quantidade">
+					<h:outputText value="#{item.quantidade}" />
+				</p:column>
+
+				<p:column headerText="Tipo">
+					<h:outputText value="#{item.tipo}" />
+				</p:column>
+
+				<p:column headerText="Ações">
+					<p:commandButton icon="ui-icon-pencil"
+						action="#{itemBean.atualizarItem(item)}" styleClass="ui-priority-primary" />
+					<p:commandButton icon="ui-icon-trash"
+						action="#{itemBean.removerItem(item)}" styleClass="ui-priority-primary" />
+
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+	</p:panel>
+</h:body>
+</html>

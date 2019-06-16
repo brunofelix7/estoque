@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Controle de estoque</title>
+</h:head>
+<h:body>
+	<p:messages showDetail="true" showSummary="false" globalOnly="true" />
+	<p:panel header="Cadastro de Usuários">
+		<h:form>
+			<p:commandLink value="Listar Usuários" action="listarUsuarios" />
+		</h:form>
+
+		<h:form id="form" prependId="false">
+			<p:panelGrid columns="3">
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
+					required="true">
+				</p:inputText>
+				<p:message for="nome" />
+
+				<p:outputLabel value="Username:" for="uname" />
+				<p:inputText id="uname" value="#{usuarioBean.usuario.username}"
+					validator="usernameValidator">
+				</p:inputText>
+				<p:message for="uname" />
+
+				<p:outputLabel value="Valor:" for="valor" />
+				<p:inputText id="valor" value="#{usuarioBean.usuario.valor}">
+				</p:inputText>
+				<p:message for="valor" />
+				
+				<p:outputLabel value="CEP:" for="cep" />
+				<p:inputMask id="cep" value="#{usuarioBean.usuario.cep}"  mask="99999-999">
+				</p:inputMask>
+				<p:message for="cep" />
+
+				<p:outputLabel value="Idade:" for="idade" />
+				<p:inputText id="idade" value="#{usuarioBean.usuario.idade}">
+				</p:inputText>
+				<p:message for="idade" />
+
+				<p:outputLabel value="Email:" for="email" />
+				<p:inputText id="email" value="#{usuarioBean.usuario.email}">
+				</p:inputText>
+				<p:message for="email" />
+
+				<p:outputLabel value="Cpf:" for="cpf" />
+				<p:inputMask id="cpf" value="#{usuarioBean.usuario.cpf}" validator="cpfValidator" mask="999.999.999-99">
+				</p:inputMask>
+				<p:message for="cpf" />
+
+				<p:outputLabel value="Password:" for="passwd" />
+				<p:password id="passwd" value="#{usuarioBean.usuario.password}">
+				</p:password>
+				<p:message for="passwd" />
+
+				<p:outputLabel value="Sexo:" for="sexo" />
+				<p:selectOneRadio id="sexo" value="#{usuarioBean.usuario.sexo}"
+					converter="sexoConverter">
+					<f:selectItems value="#{usuarioBean.listSexo}" />
+				</p:selectOneRadio>
+				<p:message for="sexo" />
+
+				<p:outputLabel value="Data Nascimento:" for="dtNasc" />
+				<p:calendar id="dtNasc" value="#{usuarioBean.usuario.dataNasc}"
+					showOn="button" navigator="true" />
+				<p:message id="msgDtNasc" for="dtNasc" />
+
+				<p:outputLabel value="Cidade de Nascimento:" for="cidadeNasc" />
+				<p:selectOneMenu id="cidadeNasc"
+					value="#{usuarioBean.usuario.cidadeNasc}"
+					converter="cidadeConverter">
+					<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{usuarioBean.listCidade}" />
+				</p:selectOneMenu>
+				<p:message for="cidadeNasc" />
+
+				<p:outputLabel value="Estado" for="estado" />
+				<p:selectOneMenu id="estado" value="#{usuarioBean.selectEstado}"
+					converter="estadoConverter">
+					<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{usuarioBean.listEstados}" />
+					<p:ajax event="change" update="mun"
+						listener="#{usuarioBean.carregarMunicipios()}" />
+				</p:selectOneMenu>
+				<p:message for="estado" />
+
+				<p:outputLabel value="Municipio" for="mun" />
+				<p:selectOneMenu id="mun" value="#{usuarioBean.usuario.municipio}"
+					converter="cidadeConverter">
+					<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{usuarioBean.listMunicipios}" />
+				</p:selectOneMenu>
+				<p:message for="cidadeNasc" />
+			</p:panelGrid>
+
+			<p:commandButton value="Salvar"
+				action="#{usuarioBean.adicionarUsuario}" ajax="false" />
+		</h:form>
+	</p:panel>
+</h:body>
+</html>

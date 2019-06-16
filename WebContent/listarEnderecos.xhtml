@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Controle de estoque</title>
+</h:head>
+<h:body>
+	<p:panel header="Listar Endereços">
+		<h:form>
+			<p:commandLink value="Home" action="index" />
+			<br /><br />
+			<p:commandButton value="Novo" action="#{enderecoBean.prepararCadastro}" ajax="false" />
+		</h:form>
+		<br />
+
+		<h:form prependId="false">
+			<p:inputText value="#{enderecoBean.filtro}">
+				<p:ajax event="blur" listener="#{enderecoBean.filtrarTabela}" update="tableUsuarios" />
+			</p:inputText>
+			<p:commandButton value="Pesquisar" action="#{enderecoBean.filtrarTabela}" />
+			
+			<p:dataTable id="tableUsuarios" widgetVar="table"
+				value="#{enderecoBean.listUsuario}" var="endereco">
+				<f:facet name="header">
+					<h:outputText value="Endereços" />
+				</f:facet>
+
+				<p:column headerText="Logradouro">
+					<h:outputText value="#{endereco.logradouro}" />
+				</p:column>
+
+				<p:column headerText="Número">
+					<h:outputText value="#{endereco.numero}" />
+				</p:column>
+
+				<p:column headerText="Cidade">
+					<h:outputText value="#{endereco.municipio}"
+						converter="cidadeConverter" />
+				</p:column>
+				
+				<p:column headerText="CEP">
+					<h:outputText value="#{endereco.cep}" />
+				</p:column>
+
+				<p:column headerText="Ações">
+					<p:commandButton icon="ui-icon-pencil" action="#{enderecoBean.atualizarUsuario(endereco)}" styleClass="ui-priority-primary" />
+					<p:commandButton icon="ui-icon-trash" action="#{enderecoBean.removerUsuario(endereco)}" styleClass="ui-priority-primary" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+</h:body>
+</html>

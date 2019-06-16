@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Controle de endereços</title>
+</h:head>
+<h:body>
+	<p:messages showDetail="true" showSummary="false" globalOnly="true" />
+	<p:panel header="Cadastro de Endereço">
+		<h:form>
+			<p:commandLink value="Listar Endereços" action="listarEnderecos" />
+		</h:form>
+
+		<h:form id="form" prependId="false">
+			<p:panelGrid columns="3">
+				<p:outputLabel value="Logradouro:" for="logradouro" />
+				<p:inputText id="logradouro"
+					value="#{enderecoBean.endereco.logradouro}" required="true">
+				</p:inputText>
+				<p:message for="logradouro" />
+
+				<p:outputLabel value="Número:" for="numero" />
+				<p:inputText id="numero" value="#{enderecoBean.endereco.numero}">
+				</p:inputText>
+				<p:message for="numero" />
+
+				<p:outputLabel value="CEP:" for="cep" />
+				<p:inputMask id="cep" value="#{enderecoBean.endereco.cep}"
+					mask="99999-999">
+				</p:inputMask>
+				<p:message for="cep" />
+				
+				<p:outputLabel value="Estado" for="estado" />
+				<p:selectOneMenu id="estado" value="#{enderecoBean.selectEstado}"
+					converter="estadoConverter">
+					<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{enderecoBean.listEstados}" />
+					<p:ajax event="change" update="municipio"
+						listener="#{enderecoBean.carregarMunicipios()}" />
+				</p:selectOneMenu>
+				<p:message for="estado" />
+
+				<p:outputLabel value="Municipio" for="municipio" />
+				<p:selectOneMenu id="municipio"
+					value="#{enderecoBean.endereco.municipio}"
+					converter="cidadeConverter">
+					<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+					<f:selectItems value="#{enderecoBean.listMunicipios}" />
+				</p:selectOneMenu>
+				<p:message for="municipio" />
+			</p:panelGrid>
+
+			<p:commandButton value="Salvar"
+				action="#{enderecoBean.adicionarUsuario}" ajax="false" />
+		</h:form>
+	</p:panel>
+</h:body>
+</html>

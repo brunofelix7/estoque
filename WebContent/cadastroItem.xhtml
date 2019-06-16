@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Controle de estoque</title>
+</h:head>
+<h:body>
+	<p:messages showDetail="true" showSummary="false" globalOnly="true" />
+	<p:panel header="Cadastro de Itens">
+		<h:form>
+			<p:commandLink value="Listar Itens" action="listarItems" />
+		</h:form>
+
+		<h:form id="form" prependId="false">
+			<p:panelGrid columns="3">
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" value="#{itemBean.item.nome}" required="true">
+				</p:inputText>
+				<p:message for="nome" />
+
+				<p:outputLabel value="Quantidade:" for="quantidade" />
+				<p:inputText id="quantidade" value="#{itemBean.item.quantidade}">
+				</p:inputText>
+				<p:message for="quantidade" />
+
+				<p:outputLabel value="Tipo:" for="tipo" />
+				<p:selectOneRadio id="tipo" value="#{itemBean.item.tipo}"
+					converter="tipoItemConverter">
+					<f:selectItems value="#{itemBean.listTipos}" />
+				</p:selectOneRadio>
+				<p:message for="tipo" />
+
+			</p:panelGrid>
+
+			<p:commandButton value="Salvar"
+				action="#{itemBean.adicionarItem}" ajax="false" />
+		</h:form>
+	</p:panel>
+</h:body>
+</html>
